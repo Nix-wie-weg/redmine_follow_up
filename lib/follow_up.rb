@@ -33,7 +33,8 @@ module FollowUp
     id = issue.journals.collect  do |j|
       j.changes["assigned_to_id"]
     end.flatten.compact.last
-    User.find (id or issue.author_id)
+    new_user_id = id or issue.author_id
+    User.find new_user_id
   end
 
 end

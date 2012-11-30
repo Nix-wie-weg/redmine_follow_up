@@ -4,7 +4,7 @@ module FollowUp
       settings["custom_field"], Date.today.to_s, "Issue")
     v.each do |value|
       issue = value.customized
-      journal = issue.init_journal user, message
+      journal = issue.init_journal(user, message)
       value.value = nil
       value.save
       issue.priority = priority
@@ -18,23 +18,22 @@ module FollowUp
   end
 
   def self.user
-    ::User.find settings["user"]
+    ::User.find(settings["user"])
   end
 
   def self.priority
-    ::IssuePriority.find settings["priority"]
+    ::IssuePriority.find(settings["priority"])
   end
 
   def self.message
     settings["message"].to_s
   end
 
-  def self.last_user_for issue
-    id = issue.journals.collect  do |j|
+  def self.last_user_for(issue)
+    assigned_id = issue.journals.collect do |j|
       j.changes["assigned_to_id"]
     end.flatten.compact.last
-    new_user_id = id or issue.author_id
-    User.find new_user_id
+    User.find(assigned_id || issue.author_id)
   end
 
 end

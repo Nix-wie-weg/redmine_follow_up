@@ -1,25 +1,25 @@
 <p>
   <label>New Priority</label>
-  <%= select_tag "settings[priority]", 
+  <%= select_tag "settings[priority]",
     options_from_collection_for_select(
       IssuePriority.all, :id, :name,  @settings[:priority].to_i) %>
 </p>
 <p>
   <label>Custom Field</label>
-  <%= select_tag "settings[custom_field]", 
+  <%= select_tag "settings[custom_field]",
     options_from_collection_for_select(
-      CustomField.find_all_by_field_format("date"), :id, :name,  
+      CustomField.where(field_format: 'date'), :id, :name,
         @settings[:custom_field].to_i) %>
 </p>
 
 <p>
   <label>Journal User</label>
-  <%= select_tag "settings[user]", 
+  <%= select_tag "settings[user]",
     options_from_collection_for_select(
       User.all, :id, :name, @settings[:user].to_i) %>
 </p>
 
 <p>
-  <label>Message</label>   
+  <label>Message</label>
   <%= text_field_tag "settings[message]", @settings[:message] %>
 </p>

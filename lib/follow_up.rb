@@ -15,7 +15,7 @@ module FollowUp
     sql = [
       'custom_field_id = ?',
       'customized_type = ?',
-      'DATE(value) < CURDATE()'
+      'DATE(value) <= CURDATE()'
     ].join(' AND ')
     CustomValue.all(:conditions => [sql, settings['custom_field'], 'Issue'])
   end

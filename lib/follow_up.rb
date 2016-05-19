@@ -37,8 +37,8 @@ module FollowUp
   end
 
   def self.last_user_for(issue)
-    assigned_id = issue.journals.collect do |j|
-      j.changes['assigned_to_id']
+    assigned_id = issue.journals.order(:id).collect do |j|
+      j.detail_for_attribute('assigned_to_id').try(:old_value)
     end.flatten.compact.last
     User.find(assigned_id || issue.author_id)
   end

@@ -6,7 +6,7 @@ module FollowUp
       value.value = nil
       value.save
       issue.priority = priority
-      issue.assigned_to = last_user_for(issue)
+      issue.assigned_to ||= last_user_for(issue)
       issue.save
     end
   end
